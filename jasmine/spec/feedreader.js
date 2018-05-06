@@ -28,6 +28,7 @@ $(function () {
             allFeeds.forEach(function (feed) {
                 feed.id = feedId;
                 expect(allFeeds[feedId].url).toBeDefined();
+                expect(allFeeds[feedId].url.length).toBeGreaterThan(0);
                 feedId++;
             });
         });
@@ -40,7 +41,8 @@ $(function () {
             let feedId = 0;
             allFeeds.forEach(function (feed) {
                 feed.id = feedId;
-                expect(allFeeds[feedId].url).toBeDefined();
+                expect(typeof allFeeds[feedId].name === 'string').toBe(true);
+                expect(allFeeds[feedId].name.length).toBeGreaterThan(0);
                 feedId++;
             });
         });
@@ -83,7 +85,7 @@ describe('Initial Entries', function () {
     });
 
     it('has at least one entry', function () {
-        expect($('.feed').children().length > 0).toBe(true);
+        expect($('.feed .entry').length).toBeGreaterThan(0);
     });
 });
 
@@ -93,17 +95,23 @@ describe('New Feed Selection', function () {
     /* Test that ensures when a new feed is loaded
      * by the loadFeed function that the content actually changes.
      */
-    let feedA = $('.feed').children().length,
+    let feedA,
         feedB;
 
     beforeEach(function (done) {
-        feedB = $('.feed').children().length;
-        done();
+        loadFeed(0, function () {
+            feedA = document.querySelector('.feed').innerHTML;
+        });
+
+        loadFeed(1, function () {
+            feedB = document.querySelector('.feed').innerHTML;
+            done();
+        });
     });
 
     /* Check if feeds have been added to the feedList*/
     it('loads new feeds', function (done) {
-        expect(feedB > feedA ? true : false).toBe(true);
+        expect(feedB !== feedA ? true : false).toBe(true);
         done();
     });
 });
