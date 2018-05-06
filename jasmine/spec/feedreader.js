@@ -80,12 +80,18 @@ describe('Initial Entries', function () {
      * function is called and completes its work, there is at least
      * a single .entry element within the .feed container.
      */
+    let feedLength;
     beforeEach(function (done) {
-        loadFeed(0, done);
+        loadFeed(0, function () {
+            feedLength = $('.feed .entry').length;
+            done();
+        });
+
     });
 
-    it('has at least one entry', function () {
-        expect($('.feed .entry').length).toBeGreaterThan(0);
+    it('has at least one entry', function (done) {
+        expect(feedLength).toBeGreaterThan(0);
+        done();
     });
 });
 
