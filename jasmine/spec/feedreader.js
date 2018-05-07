@@ -26,10 +26,8 @@ $(() => {
         it('have a valid url', () => {
             let feedId = 0;
             allFeeds.forEach((feed) => {
-                feed.id = feedId;
-                expect(allFeeds[feedId].url).toBeDefined();
+                expect(allFeeds[feed.id].url).toBeDefined();
                 expect(allFeeds[feedId].url.length).toBeGreaterThan(0);
-                feedId++;
             });
         });
 
@@ -40,23 +38,21 @@ $(() => {
         it('have a valid name', () => {
             let feedId = 0;
             allFeeds.forEach((feed) => {
-                feed.id = feedId;
-                expect(typeof allFeeds[feedId].name === 'string').toBe(true);
-                expect(allFeeds[feedId].name.length).toBeGreaterThan(0);
-                feedId++;
+                expect(allFeeds[feed.id].name).toBeDefined();
+                expect(allFeeds[feed.id].name.length).toBeGreaterThan(0);
             });
         });
     });
 
     /* Test suite that checks menu functionality */
     describe('The menu', () => {
-        const body = document.getElementById('body');
+        const body = document.getElementsByTagName('body');
 
         /* Test that ensures the menu element is
          * hidden by default.
          */
         it('hides the menu by default', () => {
-            expect(body).toHaveClass('menu-hidden');
+            expect($('body').hasClass('menu-hidden')).toBe(true);
         });
 
         /* Test that ensures the menu changes
@@ -64,11 +60,11 @@ $(() => {
          */
         it('visibility is toggled upon click on menu icon', () => {
 
-            $('.menu-icon-link').trigger('click');
+            $('.menu-icon-link').click();
             expect($(body).hasClass('menu-hidden')).toBe(false);
 
-            $('.menu-icon-link').trigger('click');
-            expect(body).toHaveClass('menu-hidden');
+            $('.menu-icon-link').click();
+            expect($('body').hasClass('menu-hidden')).toBe(true);
         });
     });
 });
@@ -117,7 +113,7 @@ describe('New Feed Selection', () => {
 
     /* Check if feeds have been added to the feedList*/
     it('loads new feeds', (done) => {
-        expect(feedB !== feedA ? true : false).toBe(true);
+        expect(feedB !== feedA).toBe(true);
         done();
     });
 });
