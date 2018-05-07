@@ -24,10 +24,9 @@ $(() => {
          * and that the URL is not empty.
          */
         it('have a valid url', () => {
-            let feedId = 0;
             allFeeds.forEach((feed) => {
-                expect(allFeeds[feed.id].url).toBeDefined();
-                expect(allFeeds[feedId].url.length).toBeGreaterThan(0);
+                expect(feed.url).toBeDefined();
+                expect(feed.url.length).toBeGreaterThan(0);
             });
         });
 
@@ -36,18 +35,15 @@ $(() => {
          * and that the name is not empty.
          */
         it('have a valid name', () => {
-            let feedId = 0;
             allFeeds.forEach((feed) => {
-                expect(allFeeds[feed.id].name).toBeDefined();
-                expect(allFeeds[feed.id].name.length).toBeGreaterThan(0);
+                expect(feed.name).toBeDefined();
+                expect(feed.name.length).toBeGreaterThan(0);
             });
         });
     });
 
     /* Test suite that checks menu functionality */
     describe('The menu', () => {
-        const body = document.getElementsByTagName('body');
-
         /* Test that ensures the menu element is
          * hidden by default.
          */
@@ -61,7 +57,7 @@ $(() => {
         it('visibility is toggled upon click on menu icon', () => {
 
             $('.menu-icon-link').click();
-            expect($(body).hasClass('menu-hidden')).toBe(false);
+            expect($('body').hasClass('menu-hidden')).toBe(false);
 
             $('.menu-icon-link').click();
             expect($('body').hasClass('menu-hidden')).toBe(true);
